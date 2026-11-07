@@ -1,0 +1,15 @@
+# build outputs
+solution/solve
+solution/solve_mip
+solution/solve_mip.tmp
+solution/build.log
+solution/.selftest/
+solution/.venv/
+solution/highs-local/
+solution/highs-src/
+solution/highs-build/
+# run files
+solution/instance.json
+solution/solution.json
+*.zip
+.DS_Store

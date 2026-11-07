@@ -1,0 +1,1 @@
+{"sites":[{"x":0,"y":0,"reward":10,"tasks":[0]},{"x":1,"y":0,"reward":10,"tasks":[0]},{"x":5,"y":5,"reward":10,"tasks":[]}],"offices":[{"x":0,"y":1,"cost":1,"maxSize":3},{"x":5,"y":6,"cost":1,"maxSize":3}],"workers":[[0]],"distances":[[1,1,9],[9,9,1]],"maxDifference":1,"balanceCoefficient":0.5}
