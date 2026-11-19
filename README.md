@@ -11,6 +11,12 @@ incremental convex-hull checks, and an optional MIP stage on top of HiGHS.
 It runs in the judge's Docker container and uses the whole time budget: it stops at ~250 s,
 against a 300 s limit.
 
+![Service zones found by the solver on a 2400-site demo instance](docs/zones.svg)
+
+*A clustered demo instance with 2400 sites and 14 candidate offices, solved in 30 s on a laptop.
+Each colour is one convex zone around its office (■); dashed squares are offices left closed,
+grey points are sites that are not worth serving. Zone sizes stay within the count window `A`.*
+
 **Highlights**
 
 - **Every constraint is strict.** Convex, non-overlapping zones, a hard cap on the difference
@@ -90,7 +96,8 @@ validation, the last answer that passed would be written instead of an empty one
 
 The best judge measurements reached **10.48 out of 11**, relative to the best result of any team
 on each test. Most tests scored 0.99–1.00. The hardest test stayed at about 0.76 throughout.
-The team did not place in the prize-winning top 3.
+The team finished in the overall top 30 (top 10 of the track) and was invited to the awards,
+but did not place in the prize-winning top 3.
 
 The final submission is the version in [`solution/`](solution).
 - **Robustness:** it carries every timing fix found by fuzzing. Three hidden worst cases were
@@ -108,7 +115,9 @@ solution/            exactly the package submitted to the judge
   run.sh             runs the best available route, nothing on stdout
   mip_driver.py      fallback MIP route through highspy over pipes
 examples/tiny.json   a 3-site instance for a smoke test
+tools/               demo instance generator and SVG renderer
 docs/solution_ru.md  full write-up (Russian)
+docs/zones.svg       the picture above
 ```
 
 ## Build and run
@@ -133,3 +142,13 @@ it falls back to a Python venv with `highspy`. `run.sh` picks the best route tha
 pure solver is always available as a last resort.
 
 To submit, zip the contents of `solution/` and choose the "Docker (zip with Makefile)" language.
+
+### Reproduce the picture
+
+```sh
+python3 tools/make_demo.py > solution/instance.json   # the 2400-site demo instance
+cd solution && ./solve 30 1 && cd ..                 # 30 s, seed 1
+python3 tools/render_svg.py solution/instance.json solution/solution.json > docs/zones.svg
+```
+
+Both scripts use only the Python standard library.
